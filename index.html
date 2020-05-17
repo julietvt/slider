@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<div id="slider" class="slider">
+<div class="rect"></div>
+</div>
+
+<script>
+    'use strict';
+    let rect = slider.querySelector('.rect');
+    rect.onmousedown = function(event){
+        event.preventDefault();
+        let shift = event.clientX - rect.getBoundingClientRect().left;
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+
+        function onMouseMove(event){
+            let newLeft = event.clientX - shift - slider.getBoundingClientRect().left;
+            // курсор вышел из слайда
+            if(newLeft < 0) newLeft=0;
+            let rightEdge = slider.offsetWidth - rect.offsetWidth;
+            if (newLeft > rightEdge) newLeft = rightEdge;
+            rect.style.left = newLeft + 'px';
+        }
+        function onMouseUp(){
+            document.removeEventListener('mouseup', onMouseUp);
+            document.removeEventListener('mousemove', onMouseMove);
+        }
+
+    }
+
+
+</script>
+
+</body>
+</html>
